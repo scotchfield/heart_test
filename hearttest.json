@@ -1,0 +1,10 @@
+{
+	"bootstrap": "tests/bootstrap.php",
+	"testsuites": [
+		{
+			"directory": "tests",
+			"prefix": "test_",
+			"suffix": ".php"
+		}
+	]
+}

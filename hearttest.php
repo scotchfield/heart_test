@@ -33,7 +33,7 @@ class WP_HeartTest {
 
 		self::$instance = $this;
 
-		$this->config_filename = '.hearttest';
+		$this->config_filename = 'hearttest.json';
 
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 	}
