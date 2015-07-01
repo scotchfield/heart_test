@@ -79,7 +79,7 @@ class WP_HeartTest {
 				continue;
 			}
 
-			echo( '<p>' . $path_obj[ 0 ] . '</p>' );
+			echo( '<p><a href="?page=' . $_GET[ 'page' ] . '&amp;test=' . $path_obj[ 0 ] . '">' . $path_obj[ 0 ] . '</a></p>' );
 		}
 	}
 
