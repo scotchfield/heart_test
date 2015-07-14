@@ -70,6 +70,10 @@ class WP_HeartTest {
 			return;
 		}
 
+		if ( isset( $_GET[ 'test' ] ) && isset( $_GET[ 'nonce' ] ) && wp_verify_nonce( $_GET[ 'nonce' ], 'test_' . $_GET[ 'test' ] ) ) {
+			echo( 'Okay!' );
+		}
+
 		$plugins = get_plugins();
 
 		foreach ( $plugins as $plugin_key => $plugin_value ) {
@@ -79,15 +83,17 @@ class WP_HeartTest {
 				continue;
 			}
 
+			$plugin = $path_obj[ 0 ];
+
 			$plugin_dir = dirname( __FILE__ );
 			$plugin_dir = substr( $plugin_dir, 0, strrpos( $plugin_dir, DIRECTORY_SEPARATOR ) + 1 );
-			$heart_filename = $plugin_dir . $path_obj[ 0 ] . DIRECTORY_SEPARATOR . $this->config_filename;
+			$heart_filename = $plugin_dir . $plugin . DIRECTORY_SEPARATOR . $this->config_filename;
 
 			if ( ! file_exists( $heart_filename ) ) {
 				continue;
 			}
 
-			echo( '<p><a href="?page=' . $_GET[ 'page' ] . '&amp;test=' . $path_obj[ 0 ] . '">' . $path_obj[ 0 ] . '</a></p>' );
+			echo( '<p><a href="?page=' . $_GET[ 'page' ] . '&amp;test=' . $plugin . '&amp;nonce=' . wp_create_nonce( 'test_' . $plugin ) . '">' . $plugin . '</a></p>' );
 		}
 	}
 
