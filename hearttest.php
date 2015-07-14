@@ -55,6 +55,13 @@ class WP_HeartTest {
 		);
 	}
 
+
+	private function do_tests( $heart_filename ) {
+?>
+<h2>Running tests from <?php echo( $heart_filename ); ?></h2>
+<?php
+	}
+
 	public function admin_page() {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', self::DOMAIN ) );
@@ -71,7 +78,15 @@ class WP_HeartTest {
 		}
 
 		if ( isset( $_GET[ 'test' ] ) && isset( $_GET[ 'nonce' ] ) && wp_verify_nonce( $_GET[ 'nonce' ], 'test_' . $_GET[ 'test' ] ) ) {
-			echo( 'Okay!' );
+			$plugin = $_GET[ 'test' ];
+
+			$plugin_dir = dirname( __FILE__ );
+			$plugin_dir = substr( $plugin_dir, 0, strrpos( $plugin_dir, DIRECTORY_SEPARATOR ) + 1 );
+			$heart_filename = $plugin_dir . $plugin . DIRECTORY_SEPARATOR . $this->config_filename;
+
+			if ( file_exists( $heart_filename ) ) {
+				$this->do_tests( $heart_filename );
+			}
 		}
 
 		$plugins = get_plugins();
