@@ -62,6 +62,14 @@ class WP_HeartTest {
 ?>
 <h1>❤️️Test</h1>
 <?php
+
+		if ( ! WP_DEBUG ) {
+?>
+<p>Sorry, ❤️️Test can only run when WP_DEBUG is set to true.</p>
+<?php
+			return;
+		}
+
 		$plugins = get_plugins();
 
 		foreach ( $plugins as $plugin_key => $plugin_value ) {
