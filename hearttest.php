@@ -56,10 +56,14 @@ class WP_HeartTest {
 	}
 
 
-	private function do_tests( $heart_filename ) {
+	private function do_tests( $❤️️_filename ) {
 ?>
-<h2>Running tests from <?php echo( $heart_filename ); ?></h2>
+<h2>Running tests from <?php echo( $❤️️_filename ); ?></h2>
 <?php
+		$config_handle = fopen( $❤️️_filename, 'r' );
+		$config_content = fread( $config_handle, filesize( $❤️️_filename ) );
+		$config = json_decode( $config_content );
+		print_r( $config );
 	}
 
 	public function admin_page() {
@@ -82,10 +86,10 @@ class WP_HeartTest {
 
 			$plugin_dir = dirname( __FILE__ );
 			$plugin_dir = substr( $plugin_dir, 0, strrpos( $plugin_dir, DIRECTORY_SEPARATOR ) + 1 );
-			$heart_filename = $plugin_dir . $plugin . DIRECTORY_SEPARATOR . $this->config_filename;
+			$❤️️_filename = $plugin_dir . $plugin . DIRECTORY_SEPARATOR . $this->config_filename;
 
-			if ( file_exists( $heart_filename ) ) {
-				$this->do_tests( $heart_filename );
+			if ( file_exists( $❤️️_filename ) ) {
+				$this->do_tests( $❤️️_filename );
 			}
 		}
 
@@ -102,9 +106,9 @@ class WP_HeartTest {
 
 			$plugin_dir = dirname( __FILE__ );
 			$plugin_dir = substr( $plugin_dir, 0, strrpos( $plugin_dir, DIRECTORY_SEPARATOR ) + 1 );
-			$heart_filename = $plugin_dir . $plugin . DIRECTORY_SEPARATOR . $this->config_filename;
+			$❤️️_filename = $plugin_dir . $plugin . DIRECTORY_SEPARATOR . $this->config_filename;
 
-			if ( ! file_exists( $heart_filename ) ) {
+			if ( ! file_exists( $❤️️_filename ) ) {
 				continue;
 			}
 
