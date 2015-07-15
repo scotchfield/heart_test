@@ -55,6 +55,17 @@ class WP_HeartTest {
 		);
 	}
 
+	private function checkPrefixSuffix( $st, $testsuite ) {
+		if ( strpos( $st, $testsuite[ 'prefix' ] ) !== 0 ) {
+			return false;
+		}
+
+		if ( strrpos( $st, $testsuite[ 'suffix' ] ) !== strlen( $st ) - strlen( $testsuite[ 'suffix' ] ) ) {
+			return false;
+		}
+
+		return true;
+	}
 
 	private function do_tests( $❤️️_filename ) {
 ?>
@@ -62,8 +73,23 @@ class WP_HeartTest {
 <?php
 		$config_handle = fopen( $❤️️_filename, 'r' );
 		$config_content = fread( $config_handle, filesize( $❤️️_filename ) );
-		$config = json_decode( $config_content );
-		print_r( $config );
+		$config = json_decode( $config_content, $assoc = true );
+
+		$dir = substr( $❤️️_filename, 0, strrpos( $❤️️_filename, '/' ) + 1 );
+
+		if ( isset( $config[ 'bootstrap' ] ) ) {
+			require( $dir . $config[ 'bootstrap' ] );
+		}
+
+		foreach ( $config[ 'testsuites' ] as $testsuite ) {
+			$files = scandir( $dir . $testsuite[ 'directory' ] );
+
+			foreach ( $files as $file ) {
+				if ( $this->checkPrefixSuffix( $file, $testsuite ) ) {
+					require( $dir . $testsuite[ 'directory' ] . '/' . $file );
+				}
+			}
+		}
 	}
 
 	public function admin_page() {
